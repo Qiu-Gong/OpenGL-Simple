@@ -9,9 +9,9 @@ import qiugong.com.myapplication.util.TextResourceReader;
 /**
  * @author qzx 2018/11/25.
  */
-abstract class ShaderProgram {
+public abstract class ShaderProgram {
 
-    private final int program;
+    protected final int program;
 
     protected ShaderProgram(Context context, int vertexShaderResourceId, int fragmentShaderResourceId) {
         program = ShaderHelper.buildProgram(
