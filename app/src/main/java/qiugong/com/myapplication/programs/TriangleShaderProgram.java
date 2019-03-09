@@ -32,7 +32,7 @@ public class TriangleShaderProgram extends ShaderProgram {
     }
 
     @Override
-    void setUniforms(float[] matrix, int textureId) {
+    public void setUniforms(float[] matrix, int textureId) {
     }
 }
 

@@ -23,5 +23,5 @@ public abstract class ShaderProgram {
         GLES20.glUseProgram(program);
     }
 
-    abstract void setUniforms(float[] matrix, int textureId);
+    public abstract void setUniforms(float[] matrix, int textureId);
 }
