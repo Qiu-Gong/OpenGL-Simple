@@ -7,8 +7,8 @@ import android.opengl.GLSurfaceView;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-import qiugong.com.myapplication.objects.TriangleColor;
-import qiugong.com.myapplication.programs.TriangleColorShaderProgram;
+import qiugong.com.myapplication.objects.Square;
+import qiugong.com.myapplication.programs.SquareShaderProgram;
 
 /**
  * @author qzx 2018/11/2.
@@ -18,8 +18,8 @@ class Renderer implements GLSurfaceView.Renderer {
     private final Context context;
 
     private float[] mvpMatrix = new float[16];
-    private TriangleColor object;
-    private TriangleColorShaderProgram shaderProgram;
+    private Square object;
+    private SquareShaderProgram shaderProgram;
 
     Renderer(Context context) {
         this.context = context;
@@ -29,8 +29,8 @@ class Renderer implements GLSurfaceView.Renderer {
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
         GLES20.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
-        object = new TriangleColor();
-        shaderProgram = new TriangleColorShaderProgram(context);
+        object = new Square();
+        shaderProgram = new SquareShaderProgram(context);
     }
 
     @Override
