@@ -7,8 +7,8 @@ import android.opengl.GLSurfaceView;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-import qiugong.com.myapplication.objects.Oval;
-import qiugong.com.myapplication.programs.OvalShaderProgram;
+import qiugong.com.myapplication.objects.Cube;
+import qiugong.com.myapplication.programs.CubeShaderProgram;
 
 /**
  * @author qzx 2018/11/2.
@@ -18,8 +18,8 @@ class Renderer implements GLSurfaceView.Renderer {
     private final Context context;
 
     private float[] mvpMatrix = new float[16];
-    private Oval object;
-    private OvalShaderProgram shaderProgram;
+    private Cube object;
+    private CubeShaderProgram shaderProgram;
 
     Renderer(Context context) {
         this.context = context;
@@ -29,8 +29,8 @@ class Renderer implements GLSurfaceView.Renderer {
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
         GLES20.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
-        object = new Oval();
-        shaderProgram = new OvalShaderProgram(context);
+        object = new Cube();
+        shaderProgram = new CubeShaderProgram(context);
     }
 
     @Override
@@ -41,7 +41,7 @@ class Renderer implements GLSurfaceView.Renderer {
 
     @Override
     public void onDrawFrame(GL10 gl) {
-        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
+        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
 
         shaderProgram.useProgram();
         shaderProgram.setUniforms(mvpMatrix, 0);
