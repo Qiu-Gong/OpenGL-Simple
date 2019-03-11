@@ -26,8 +26,14 @@ public class Oval extends Objects<OvalShaderProgram> {
 
     private final VertexArray vertexArray;
     private final float[] vertexData;
+    private float height;
 
-    public Oval() {
+    public Oval(){
+        this(0.0f);
+    }
+
+    public Oval(float height) {
+        this.height = height;
         vertexData = createPositions();
         vertexArray = new VertexArray(vertexData);
     }
@@ -36,13 +42,13 @@ public class Oval extends Objects<OvalShaderProgram> {
         ArrayList<Float> data = new ArrayList<>();
         data.add(0.0f);
         data.add(0.0f);
-        data.add(0.0f);
+        data.add(height);
 
         float angSpan = 360f / CUT_COUNT;
         for (float i = 0; i < 360 + angSpan; i += angSpan) {
             data.add((float) (RADIUS * Math.sin(i * Math.PI / 180f)));
             data.add((float) (RADIUS * Math.cos(i * Math.PI / 180f)));
-            data.add(0.0f);
+            data.add(height);
         }
 
         float[] array = new float[data.size()];
