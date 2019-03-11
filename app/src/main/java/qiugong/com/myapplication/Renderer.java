@@ -7,8 +7,8 @@ import android.opengl.GLSurfaceView;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-import qiugong.com.myapplication.objects.Cylinder;
-import qiugong.com.myapplication.programs.ConeShaderProgram;
+import qiugong.com.myapplication.objects.Ball;
+import qiugong.com.myapplication.programs.BallShaderProgram;
 
 /**
  * @author qzx 2018/11/2.
@@ -19,8 +19,8 @@ class Renderer implements GLSurfaceView.Renderer {
 
     private float[] mvpMatrix = new float[16];
 
-    private Cylinder object;
-    private ConeShaderProgram shaderProgram;
+    private Ball object;
+    private BallShaderProgram shaderProgram;
 
     Renderer(Context context) {
         this.context = context;
@@ -30,8 +30,8 @@ class Renderer implements GLSurfaceView.Renderer {
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
         GLES20.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
-        object = new Cylinder(context);
-        shaderProgram = new ConeShaderProgram(context);
+        object = new Ball();
+        shaderProgram = new BallShaderProgram(context);
     }
 
     @Override
