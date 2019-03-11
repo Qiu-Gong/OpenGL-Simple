@@ -7,8 +7,8 @@ import android.opengl.GLSurfaceView;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-import qiugong.com.myapplication.objects.Cube;
-import qiugong.com.myapplication.programs.CubeShaderProgram;
+import qiugong.com.myapplication.objects.Cone;
+import qiugong.com.myapplication.programs.ConeShaderProgram;
 
 /**
  * @author qzx 2018/11/2.
@@ -18,8 +18,9 @@ class Renderer implements GLSurfaceView.Renderer {
     private final Context context;
 
     private float[] mvpMatrix = new float[16];
-    private Cube object;
-    private CubeShaderProgram shaderProgram;
+
+    private Cone object;
+    private ConeShaderProgram shaderProgram;
 
     Renderer(Context context) {
         this.context = context;
@@ -29,8 +30,8 @@ class Renderer implements GLSurfaceView.Renderer {
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
         GLES20.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
-        object = new Cube();
-        shaderProgram = new CubeShaderProgram(context);
+        object = new Cone(context);
+        shaderProgram = new ConeShaderProgram(context);
     }
 
     @Override

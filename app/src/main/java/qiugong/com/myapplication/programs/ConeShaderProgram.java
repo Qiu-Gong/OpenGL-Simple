@@ -8,30 +8,23 @@ import qiugong.com.myapplication.R;
 /**
  * @author qzx 2019/3/10.
  */
-public class OvalShaderProgram extends ShaderProgram {
+public class ConeShaderProgram extends ShaderProgram {
 
     private static final String A_POSITION = "a_Position";
     private static final String U_MATRIX = "u_Matrix";
-    private static final String U_COLOR = "u_Color";
 
     private final int aPositionLocation;
     private final int uMatrixLocation;
-    private final int uColorLocation;
 
-    public OvalShaderProgram(Context context) {
-        super(context, R.raw.oval_vertex_shader, R.raw.oval_fragment_shader);
+    public ConeShaderProgram(Context context) {
+        super(context, R.raw.cone_vertex_shader, R.raw.cone_fragment_shader);
 
         aPositionLocation = GLES20.glGetAttribLocation(program, A_POSITION);
         uMatrixLocation = GLES20.glGetUniformLocation(program, U_MATRIX);
-        uColorLocation = GLES20.glGetUniformLocation(program, U_COLOR);
     }
 
     public int getPositionAttributeLocation() {
         return aPositionLocation;
-    }
-
-    public int getColorLocation() {
-        return uColorLocation;
     }
 
     @Override
