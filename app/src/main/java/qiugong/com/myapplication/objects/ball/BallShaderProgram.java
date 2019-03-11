@@ -1,9 +1,10 @@
-package qiugong.com.myapplication.programs;
+package qiugong.com.myapplication.objects.ball;
 
 import android.content.Context;
 import android.opengl.GLES20;
 
 import qiugong.com.myapplication.R;
+import qiugong.com.myapplication.programs.ShaderProgram;
 
 /**
  * @author qzx 2019/3/11.

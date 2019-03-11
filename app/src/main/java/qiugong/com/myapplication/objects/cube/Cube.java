@@ -1,4 +1,4 @@
-package qiugong.com.myapplication.objects;
+package qiugong.com.myapplication.objects.cube;
 
 import android.opengl.GLES20;
 import android.opengl.Matrix;
@@ -6,7 +6,7 @@ import android.opengl.Matrix;
 import qiugong.com.myapplication.Constants;
 import qiugong.com.myapplication.data.IndexArray;
 import qiugong.com.myapplication.data.VertexArray;
-import qiugong.com.myapplication.programs.CubeShaderProgram;
+import qiugong.com.myapplication.objects.Objects;
 
 /**
  * @author qzx 2019/3/10.

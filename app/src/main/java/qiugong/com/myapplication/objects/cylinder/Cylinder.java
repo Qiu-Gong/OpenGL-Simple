@@ -1,4 +1,4 @@
-package qiugong.com.myapplication.objects;
+package qiugong.com.myapplication.objects.cylinder;
 
 import android.content.Context;
 import android.opengl.GLES20;
@@ -8,8 +8,10 @@ import java.util.ArrayList;
 
 import qiugong.com.myapplication.Constants;
 import qiugong.com.myapplication.data.VertexArray;
-import qiugong.com.myapplication.programs.ConeShaderProgram;
-import qiugong.com.myapplication.programs.OvalShaderProgram;
+import qiugong.com.myapplication.objects.Objects;
+import qiugong.com.myapplication.objects.oval.Oval;
+import qiugong.com.myapplication.objects.cone.ConeShaderProgram;
+import qiugong.com.myapplication.objects.oval.OvalShaderProgram;
 
 /**
  * @author qzx 2019/3/10.

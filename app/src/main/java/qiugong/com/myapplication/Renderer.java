@@ -7,8 +7,8 @@ import android.opengl.GLSurfaceView;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-import qiugong.com.myapplication.objects.Ball;
-import qiugong.com.myapplication.programs.BallShaderProgram;
+import qiugong.com.myapplication.objects.ball.Ball;
+import qiugong.com.myapplication.objects.ball.BallShaderProgram;
 
 /**
  * @author qzx 2018/11/2.

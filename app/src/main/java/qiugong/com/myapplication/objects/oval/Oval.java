@@ -1,4 +1,4 @@
-package qiugong.com.myapplication.objects;
+package qiugong.com.myapplication.objects.oval;
 
 import android.opengl.GLES20;
 
@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import qiugong.com.myapplication.Constants;
 import qiugong.com.myapplication.data.VertexArray;
-import qiugong.com.myapplication.programs.OvalShaderProgram;
+import qiugong.com.myapplication.objects.Objects;
 
 /**
  * @author qzx 2019/3/10.

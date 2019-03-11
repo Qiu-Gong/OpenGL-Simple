@@ -1,6 +1,5 @@
-package qiugong.com.myapplication.objects;
+package qiugong.com.myapplication.objects.ball;
 
-import android.content.Context;
 import android.opengl.GLES20;
 import android.opengl.Matrix;
 
@@ -8,47 +7,51 @@ import java.util.ArrayList;
 
 import qiugong.com.myapplication.Constants;
 import qiugong.com.myapplication.data.VertexArray;
-import qiugong.com.myapplication.programs.ConeShaderProgram;
-import qiugong.com.myapplication.programs.OvalShaderProgram;
+import qiugong.com.myapplication.objects.Objects;
 
 /**
- * @author qzx 2019/3/10.
+ * @author qzx 2019/3/11.
  */
-public class Cone extends Objects<ConeShaderProgram> {
+public class Ball extends Objects<BallShaderProgram> {
 
     private static final int POSITION_COMPONENT_COUNT = 3;
     private static final int STRIDE = (POSITION_COMPONENT_COUNT) * Constants.BYTES_PER_FLOAT;
 
-    private static final float RADIUS = 1.0f;
-    private static final int CUT_COUNT = 360;
-
-    private final float[] vertexData;
     private final VertexArray vertexArray;
+    private final float[] vertexData;
 
-    private final Oval oval;
-    private final OvalShaderProgram ovalShaderProgram;
-    private float[] ovalMvpMatrix;
-
-    public Cone(Context context) {
-        oval = new Oval();
+    public Ball() {
         vertexData = createPositions();
         vertexArray = new VertexArray(vertexData);
-        ovalShaderProgram = new OvalShaderProgram(context);
-
         GLES20.glEnable(GLES20.GL_DEPTH_TEST);
     }
 
     private float[] createPositions() {
         ArrayList<Float> data = new ArrayList<>();
-        data.add(0.0f);
-        data.add(0.0f);
-        data.add(2.0f);
+        float r1, r2;
+        float h1, h2;
+        float sin, cos;
 
-        float angSpan = 360f / CUT_COUNT;
-        for (float i = 0; i < 360 + angSpan; i += angSpan) {
-            data.add((float) (RADIUS * Math.sin(i * Math.PI / 180f)));
-            data.add((float) (RADIUS * Math.cos(i * Math.PI / 180f)));
-            data.add(0.0f);
+        float step = 1f;
+        for (float i = -90; i < 90 + step; i += step) {
+            r1 = (float) Math.cos(i * Math.PI / 180.0);
+            r2 = (float) Math.cos((i + step) * Math.PI / 180.0);
+            h1 = (float) Math.sin(i * Math.PI / 180.0);
+            h2 = (float) Math.sin((i + step) * Math.PI / 180.0);
+
+            // 固定纬度, 360 度旋转遍历一条纬线
+            float step2 = step * 2;
+            for (float j = 0.0f; j < 360.0f + step; j += step2) {
+                cos = (float) Math.cos(j * Math.PI / 180.0);
+                sin = -(float) Math.sin(j * Math.PI / 180.0);
+
+                data.add(r2 * cos);
+                data.add(h2);
+                data.add(r2 * sin);
+                data.add(r1 * cos);
+                data.add(h1);
+                data.add(r1 * sin);
+            }
         }
 
         float[] array = new float[data.size()];
@@ -60,7 +63,7 @@ public class Cone extends Objects<ConeShaderProgram> {
     }
 
     @Override
-    public void bindData(ConeShaderProgram colorProgram) {
+    public void bindData(BallShaderProgram colorProgram) {
         vertexArray.setVertexAttribPointer(
                 0,
                 colorProgram.getPositionAttributeLocation(),
@@ -72,14 +75,8 @@ public class Cone extends Objects<ConeShaderProgram> {
     @Override
     public void draw() {
         GLES20.glDrawArrays(GLES20.GL_TRIANGLE_FAN, 0, vertexData.length / POSITION_COMPONENT_COUNT);
-
-        ovalShaderProgram.useProgram();
-        ovalShaderProgram.setUniforms(ovalMvpMatrix, 0);
-        oval.bindData(ovalShaderProgram);
-        oval.draw();
     }
 
-    @Override
     public void setMvpMatrix(float[] mvp, int width, int height) {
         float[] project = new float[16];
         float[] view = new float[16];
@@ -95,7 +92,5 @@ public class Cone extends Objects<ConeShaderProgram> {
                 0f, 1.0f, 0.0f);
         //计算变换矩阵
         Matrix.multiplyMM(mvp, 0, project, 0, view, 0);
-
-        ovalMvpMatrix = mvp;
     }
 }
