@@ -4,7 +4,7 @@ import android.content.Context;
 import android.opengl.GLES20;
 
 import qiugong.com.myapplication.R;
-import qiugong.com.myapplication.programs.ShaderProgram;
+import qiugong.com.myapplication.objects.ShaderProgram;
 
 /**
  * @author qzx 2019/3/10.

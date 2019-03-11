@@ -1,4 +1,4 @@
-package qiugong.com.myapplication.programs;
+package qiugong.com.myapplication.objects;
 
 import android.content.Context;
 import android.opengl.GLES20;
