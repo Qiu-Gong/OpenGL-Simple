@@ -105,4 +105,27 @@ public class Cube extends Objects<CubeShaderProgram> {
         //计算变换矩阵
         Matrix.multiplyMM(mvp, 0, project, 0, view, 0);
     }
+
+    public void setMvpMatrix(float[] mvp, int width, int height,
+                             float left, float right, float bottom, float top, float near, float far,
+                             float eyeX, float eyeY, float eyeZ, float centerX, float centerY, float centerZ, float upX, float upY, float upZ) {
+        float[] project = new float[16];
+        float[] view = new float[16];
+
+        try {
+            //计算宽高比
+            float ratio = (float) width / height;
+            //设置透视投影
+            Matrix.frustumM(project, 0, -ratio, ratio, -1, 1, near, far);
+            //设置相机位置
+            Matrix.setLookAtM(view, 0,
+                    eyeX, eyeY, eyeZ,
+                    centerX, centerY, centerZ,
+                    upX, upY, upZ);
+            //计算变换矩阵
+            Matrix.multiplyMM(mvp, 0, project, 0, view, 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
