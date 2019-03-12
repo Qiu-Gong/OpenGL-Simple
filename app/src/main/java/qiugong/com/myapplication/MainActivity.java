@@ -7,6 +7,7 @@ import android.content.pm.ConfigurationInfo;
 import android.opengl.GLSurfaceView;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 public class MainActivity extends Activity implements SeekBarSelector.SeekBarListener {
@@ -22,6 +23,7 @@ public class MainActivity extends Activity implements SeekBarSelector.SeekBarLis
         glSurfaceView = findViewById(R.id.surface_view);
         SeekBarSelector seekBarSelector = findViewById(R.id.seek_bar);
         seekBarSelector.setSeekBarListener(this);
+        seekBarSelector.setVisibility(View.GONE);
 
         final ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
         if (activityManager == null) {
@@ -68,7 +70,5 @@ public class MainActivity extends Activity implements SeekBarSelector.SeekBarLis
     @Override
     public void onChangeListener(float left, float right, float bottom, float top, float near, float far,
                                  float eyeX, float eyeY, float eyeZ, float centerX, float centerY, float centerZ, float upX, float upY, float upZ) {
-        renderer.onChangeListener(left, right, bottom, top, near, far,
-                eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ);
     }
 }

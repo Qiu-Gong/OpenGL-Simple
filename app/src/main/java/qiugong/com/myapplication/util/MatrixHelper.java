@@ -1,33 +1,73 @@
 package qiugong.com.myapplication.util;
 
+import android.opengl.Matrix;
+
+import java.util.Arrays;
+import java.util.Stack;
+
 /**
  * @author qzx 2018/11/12.
  */
 public class MatrixHelper {
 
-    public static void perspectiveM(float[] m, float yFovInDegrees, float aspect, float n, float f) {
+    private float[] project = new float[16];
+    private float[] view = new float[16];
+    private float[] mode = new float[]{
+            1, 0, 0, 0,
+            0, 1, 0, 0,
+            0, 0, 1, 0,
+            0, 0, 0, 1,};
 
-        final float angleInRadians = (float) (yFovInDegrees * Math.PI / 180.0);
-        final float a = (float) (1.0 / Math.tan(angleInRadians / 2.0));
+    private Stack<float[]> stack = new Stack<>();
 
-        m[0] = a / aspect;
-        m[1] = 0f;
-        m[2] = 0f;
-        m[3] = 0f;
+    public void pushStack() {
+        stack.push(Arrays.copyOf(mode, 16));
+    }
 
-        m[4] = 0f;
-        m[5] = a;
-        m[6] = 0f;
-        m[7] = 0f;
+    public void popStack() {
+        mode = stack.pop();
+    }
 
-        m[8] = 0f;
-        m[9] = 0f;
-        m[10] = -((f + n) / (f - n));
-        m[11] = -1f;
+    public void clearStack() {
+        stack.clear();
+    }
 
-        m[12] = 0f;
-        m[13] = 0f;
-        m[14] = -((2f * f * n) / (f - n));
-        m[15] = 0f;
+    //设置相机
+    public void setLookAtM(float ex, float ey, float ez,
+                              float cx, float cy, float cz,
+                              float ux, float uy, float uz) {
+        Matrix.setLookAtM(view, 0, ex, ey, ez, cx, cy, cz, ux, uy, uz);
+    }
+
+    // 透视投影
+    public void frustum(float left, float right, float bottom, float top, float near, float far) {
+        Matrix.frustumM(project, 0, left, right, bottom, top, near, far);
+    }
+
+    // 正交投影
+    public void ortho(float left, float right, float bottom, float top, float near, float far) {
+        Matrix.orthoM(project, 0, left, right, bottom, top, near, far);
+    }
+
+    //平移变换
+    public void translate(float x, float y, float z) {
+        Matrix.translateM(mode, 0, x, y, z);
+    }
+
+    //旋转变换
+    public void rotate(float angle, float x, float y, float z) {
+        Matrix.rotateM(mode, 0, angle, x, y, z);
+    }
+
+    //缩放变换
+    public void scale(float x, float y, float z) {
+        Matrix.scaleM(mode, 0, x, y, z);
+    }
+
+    public float[] getMvpMatrix() {
+        float[] mvp = new float[16];
+        Matrix.multiplyMM(mvp, 0, view, 0, mode, 0);
+        Matrix.multiplyMM(mvp, 0, project, 0, mvp, 0);
+        return mvp;
     }
 }

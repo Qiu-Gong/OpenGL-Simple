@@ -9,6 +9,7 @@ import javax.microedition.khronos.opengles.GL10;
 
 import qiugong.com.myapplication.objects.cube.Cube;
 import qiugong.com.myapplication.objects.cube.CubeShaderProgram;
+import qiugong.com.myapplication.util.MatrixHelper;
 
 /**
  * @author qzx 2018/11/2.
@@ -17,14 +18,13 @@ class MatrixRenderer implements GLSurfaceView.Renderer {
 
     private final Context context;
 
-    private float[] mvpMatrix = new float[16];
-
     private Cube object;
     private CubeShaderProgram shaderProgram;
-    private int width, height;
+    private MatrixHelper helper;
 
     MatrixRenderer(Context context) {
         this.context = context;
+        helper = new MatrixHelper();
     }
 
     @Override
@@ -37,10 +37,11 @@ class MatrixRenderer implements GLSurfaceView.Renderer {
 
     @Override
     public void onSurfaceChanged(GL10 gl, int width, int height) {
-        this.width = width;
-        this.height = height;
         GLES20.glViewport(0, 0, width, height);
-        object.setMvpMatrix(mvpMatrix, width, height);
+
+        float rate = width / (float) height;
+        helper.frustum(-rate * 3, rate * 3, -3, 3, 3, 20);
+        helper.setLookAtM(0, 0, 10, 0, 0, 0, 0, 1, 0);
     }
 
     @Override
@@ -48,14 +49,38 @@ class MatrixRenderer implements GLSurfaceView.Renderer {
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
 
         shaderProgram.useProgram();
-        shaderProgram.setUniforms(mvpMatrix, 0);
+        shaderProgram.setUniforms(helper.getMvpMatrix(), 0);
         object.bindData(shaderProgram);
         object.draw();
-    }
 
-    public void onChangeListener(float left, float right, float bottom, float top, float near, float far,
-                                 float eyeX, float eyeY, float eyeZ, float centerX, float centerY, float centerZ, float upX, float upY, float upZ) {
-        object.setMvpMatrix(mvpMatrix, width, height, left, right, bottom, top, near, far,
-                eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ);
+        helper.pushStack();
+        helper.translate(0, 3, 0);
+        shaderProgram.setUniforms(helper.getMvpMatrix(), 0);
+        object.draw();
+        helper.popStack();
+
+        helper.pushStack();
+        helper.translate(0, -3, 0);
+        helper.rotate(30f, 1, 1, 1);
+        shaderProgram.setUniforms(helper.getMvpMatrix(), 0);
+        object.draw();
+        helper.popStack();
+
+        helper.pushStack();
+        helper.translate(-3, 0, 0);
+        helper.scale(0.5f, 0.5f, 0.5f);
+
+        helper.pushStack();
+        helper.translate(12, 0, 0);
+        helper.scale(1.0f, 2.0f, 1.0f);
+        helper.rotate(30f, 1, 2, 1);
+        shaderProgram.setUniforms(helper.getMvpMatrix(), 0);
+        object.draw();
+        helper.popStack();
+
+        helper.rotate(30f, -1, -1, 1);
+        shaderProgram.setUniforms(helper.getMvpMatrix(), 0);
+        object.draw();
+        helper.popStack();
     }
 }
