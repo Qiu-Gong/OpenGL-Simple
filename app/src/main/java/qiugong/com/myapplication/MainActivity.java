@@ -36,7 +36,7 @@ public class MainActivity extends Activity {
 
         if (supportsEs2) {
             glSurfaceView.setEGLContextClientVersion(2);
-            glSurfaceView.setRenderer(new Renderer(this));
+            glSurfaceView.setRenderer(new TextureRenderer(this));
             rendererSet = true;
         } else {
             Toast.makeText(this, "This device does not support OpenGL ES 2.0.",
