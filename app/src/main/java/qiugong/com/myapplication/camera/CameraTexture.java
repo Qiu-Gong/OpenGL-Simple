@@ -1,7 +1,6 @@
 package qiugong.com.myapplication.camera;
 
 import android.opengl.GLES20;
-import android.opengl.Matrix;
 
 import qiugong.com.myapplication.Constants;
 import qiugong.com.myapplication.data.VertexArray;
@@ -63,7 +62,7 @@ public class CameraTexture extends Objects<CameraTextureShaderProgram> {
     public void setMvpMatrix(MatrixHelper matrixHelper, int width, int height, int previewWidth, int previewHeight) {
         if (previewHeight > 0 && previewWidth > 0 && width > 0 && height > 0) {
             float scale = (float) width / height;
-            float preScale = (float) previewWidth / previewHeight;
+            float preScale = (float) previewHeight / previewWidth;
 
             if (preScale > scale) {
                 matrixHelper.ortho(-scale / preScale, scale / preScale, -1, 1, 1, 3);
@@ -71,23 +70,6 @@ public class CameraTexture extends Objects<CameraTextureShaderProgram> {
                 matrixHelper.ortho(-1, 1, -preScale / scale, preScale / scale, 1, 3);
             }
             matrixHelper.setLookAtM(0, 0, 1, 0, 0, 0, 0, 1, 0);
-        }
-    }
-
-    public void setMvpMatrix(float[] matrix, int width, int height, int previewWidth, int previewHeight) {
-        if (previewHeight > 0 && previewWidth > 0 && width > 0 && height > 0) {
-            float scale = (float) width / height;
-            float preScale = (float) previewWidth / previewHeight;
-            float[] projection = new float[16];
-            float[] camera = new float[16];
-
-            if (preScale > scale) {
-                Matrix.orthoM(projection, 0, -scale / preScale, scale / preScale, -1, 1, 1, 3);
-            } else {
-                Matrix.orthoM(projection, 0, -1, 1, -preScale / scale, preScale / scale, 1, 3);
-            }
-            Matrix.setLookAtM(camera, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0);
-            Matrix.multiplyMM(matrix, 0, projection, 0, camera, 0);
         }
     }
 }
