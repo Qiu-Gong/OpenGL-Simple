@@ -1,4 +1,4 @@
-package qiugong.com.myapplication;
+package qiugong.com.myapplication.objects.texture;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -9,8 +9,7 @@ import android.opengl.GLSurfaceView;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-import qiugong.com.myapplication.objects.texture.TextureColor;
-import qiugong.com.myapplication.objects.texture.TextureColorShaderProgram;
+import qiugong.com.myapplication.R;
 import qiugong.com.myapplication.util.TextureHelper;
 
 /**

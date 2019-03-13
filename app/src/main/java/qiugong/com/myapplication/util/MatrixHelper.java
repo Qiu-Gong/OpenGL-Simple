@@ -34,8 +34,8 @@ public class MatrixHelper {
 
     //设置相机
     public void setLookAtM(float ex, float ey, float ez,
-                              float cx, float cy, float cz,
-                              float ux, float uy, float uz) {
+                           float cx, float cy, float cz,
+                           float ux, float uy, float uz) {
         Matrix.setLookAtM(view, 0, ex, ey, ez, cx, cy, cz, ux, uy, uz);
     }
 
@@ -59,15 +59,21 @@ public class MatrixHelper {
         Matrix.rotateM(mode, 0, angle, x, y, z);
     }
 
+    // 镜像
+    public void flip(boolean x, boolean y) {
+        Matrix.scaleM(mode, 0, x ? -1 : 1, y ? -1 : 1, 1);
+    }
+
     //缩放变换
     public void scale(float x, float y, float z) {
         Matrix.scaleM(mode, 0, x, y, z);
     }
 
     public float[] getMvpMatrix() {
+        float[] temp = new float[16];
         float[] mvp = new float[16];
-        Matrix.multiplyMM(mvp, 0, view, 0, mode, 0);
-        Matrix.multiplyMM(mvp, 0, project, 0, mvp, 0);
+        Matrix.multiplyMM(temp, 0, view, 0, mode, 0);
+        Matrix.multiplyMM(mvp, 0, project, 0, temp, 0);
         return mvp;
     }
 }
