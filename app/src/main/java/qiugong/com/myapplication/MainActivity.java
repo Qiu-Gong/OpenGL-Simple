@@ -10,13 +10,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import qiugong.com.myapplication.camera.CameraRenderer;
+import qiugong.com.myapplication.objects.fbo.FboRenderer;
 
 public class MainActivity extends Activity implements SeekBarSelector.SeekBarListener {
 
     private GLSurfaceView glSurfaceView;
     private boolean rendererSet = false;
-    private CameraRenderer renderer;
+    private FboRenderer renderer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +43,7 @@ public class MainActivity extends Activity implements SeekBarSelector.SeekBarLis
                         || Build.MODEL.contains("Android SDK built for x86")));
 
         if (supportsEs2) {
-            renderer = new CameraRenderer(this, glSurfaceView);
+            renderer = new FboRenderer(this);
             glSurfaceView.setEGLContextClientVersion(2);
             glSurfaceView.setRenderer(renderer);
             glSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
@@ -59,7 +59,6 @@ public class MainActivity extends Activity implements SeekBarSelector.SeekBarLis
         super.onPause();
         if (rendererSet) {
             glSurfaceView.onPause();
-            renderer.onPause();
         }
     }
 
@@ -68,7 +67,6 @@ public class MainActivity extends Activity implements SeekBarSelector.SeekBarLis
         super.onResume();
         if (rendererSet) {
             glSurfaceView.onResume();
-            renderer.onResume();
         }
     }
 
